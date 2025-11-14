@@ -1,0 +1,193 @@
+{% extends "mainapp/base.html" %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+
+<!-- SLIDER -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+			aria-current="true" aria-label="Slide 1"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+	</div>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img src="{% static 'images/banner/slide1.webp' %}" class="d-block w-100" alt="slide1">
+		</div>
+		<div class="carousel-item">
+			<img src="{% static 'images/banner/slide2.webp' %}" class="d-block w-100" alt="slide2">
+		</div>
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
+</div>
+
+<br><br>
+
+<!-- POLICY -->
+<div class="container">
+	<div class="row policies-body justify-content-center">
+		{% for i in "1234" %}
+		<div class="col-lg-3 col-sm-6 d-flex justify-content-center mb-4">
+			<div class="policies-item text-center">
+				<div class="policies-image mb-2">
+					<img src="//theme.hstatic.net/200000881795/1001243022/14/policies_icon_{{ forloop.counter }}.png?v=137"
+						alt="policies_icon_{{ forloop.counter }}" width="40" height="40" class="img-fluid">
+				</div>
+				<div class="policies-info">
+					{% if forloop.counter == 1 %}
+					<h4 class="policies-title">Vận chuyển toàn quốc</h4>
+					<div class="policies-desc">Vận chuyển nhanh chóng</div>
+					{% elif forloop.counter == 2 %}
+					<h4 class="policies-title">Ưu đãi hấp dẫn</h4>
+					<div class="policies-desc">Nhiều ưu đãi khuyến mãi hot</div>
+					{% elif forloop.counter == 3 %}
+					<h4 class="policies-title">Bảo đảm chất lượng</h4>
+					<div class="policies-desc">Sản phẩm đã được kiểm định</div>
+					{% else %}
+					<h4 class="policies-title">Hotline: 0822221992</h4>
+					<div class="policies-desc">Vui lòng gọi hotline để hỗ trợ</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<br><br>
+
+<!-- NOTIFICATION -->
+{% if notification %}
+<div id="notification" class="notification {{ notification_type }}">
+	<span>{{ notification }}</span>
+</div>
+{% endif %}
+
+<!-- CONTENT -->
+<div class="container">
+	<div class="d-flex align-items-center justify-content-center mb-4">
+		<h1 class="mr-2">SẢN PHẨM ĐANG BÁN</h1>
+		<img src="{% static 'images/flashsale-hot.png' %}" alt="flashsale-hot" height="50" width="50">
+	</div>
+
+	{% if listProduct %}
+	<div class="row justify-content-start">
+		{% for product in listProduct %}
+		<div class="col-lg-3 col-sm-6 d-flex justify-content-center mb-4">
+			<div class="card card-product" style="width: 16.2rem;">
+				<img src="{% static 'images/' %}{{ product.image }}" class="card-img-top" alt="{{ product.name }}" height="260">
+				<div class="card-body">
+					<h6><strong>{{ product.name }}</strong></h6>
+					<hr>
+
+					<form action="{% url 'home' %}" method="post"
+						onsubmit="return checkProductQuantity({{ product.quantity }}, '{{ product.name }}')">
+						{% csrf_token %}
+						<input type="hidden" name="action" value="add" />
+						<input type="hidden" name="productCode" value="{{ product.id }}" />
+
+						{% if not user.is_authenticated %}
+						<a href="{% url 'login' %}"
+							onclick="alert('Bạn chưa đăng nhập tài khoản! \\nVui lòng đăng nhập trước khi mua sắm!');">
+							<button type="button" class="btn btn-outline-success btn-radius btn-scale">
+								Thêm vào giỏ hàng
+							</button>
+						</a>
+						{% else %}
+						<button type="submit" class="btn btn-outline-success btn-radius btn-scale">Thêm vào giỏ hàng</button>
+						{% endif %}
+
+						<a class="btn btn-outline-info btn-radius btn-scale" href="{% url 'detail' product.id %}">Xem</a>
+					</form>
+
+					<h5 class="text-center">
+{#						<strong>{{ product.price|floatformat:0|intcomma }} VNĐ</strong>#}
+					</h5>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% else %}
+	<div class="text-center">
+		<h2>Chưa có sản phẩm nào được bán :(</h2>
+		<img src="{% static 'images/cart_empty_background.webp' %}" class="img-fluid" alt="Không có sản phẩm">
+	</div>
+	{% endif %}
+</div>
+
+<br><br>
+
+<!-- CONTAINER-CART1 -->
+<a href="{% url 'home' %}">
+	<div class="container card border-0">
+		<div class="imgtext_body d-flex">
+			<a class="imgtext_img" href="">
+				<picture>
+					<img class="img-fluid mx-auto" src="{% static 'images/banner/slide2.webp' %}" width="100%" height="540" alt="imgtext_img">
+				</picture>
+			</a>
+		</div>
+	</div>
+</a>
+
+<br><br>
+
+<!-- CUSTOMER -->
+<div class="container">
+	<h2 class="text-center mb-4">Khách hàng đã nói gì</h2>
+	<div class="row d-flex justify-content-between">
+		{% for cus in customers %}
+		<div class="card col-lg-4 col-sm-6 mx-auto" style="width: 20rem;">
+			<img src="{{ cus.image }}" class="card-img-top" alt="{{ cus.name }}">
+			<h4 class="text-center">{{ cus.name }}</h4>
+			<div class="card-body">
+				<p class="card-text">{{ cus.comment }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<br><br>
+
+<!-- CONTAINER-CART2 -->
+<a href="{% url 'home' %}">
+	<div class="container card border-0">
+		<div class="imgtext_body d-flex">
+			<a class="imgtext_img" href="">
+				<picture>
+					<img class="img-fluid mx-auto" src="{% static 'images/banner/slide3.webp' %}" width="100%" height="540" alt="imgtext_img">
+				</picture>
+			</a>
+		</div>
+	</div>
+</a>
+
+<br><br>
+
+<!-- INSTAGRAM -->
+<div class="container">
+	<h2 class="text-center mb-4">@ Follow Instagram</h2>
+	<div class="row justify-content-center">
+		{% for i in "12345" %}
+		<div class="col-lg-3 col-sm-6 mb-4 d-flex justify-content-center">
+			<a href="https://www.instagram.com/p/CMM6ikxDM-r/">
+				<div class="card" style="width: 16rem;">
+					<img src="https://theme.hstatic.net/200000881795/1001243022/14/insta_{{ i }}_img.jpg?v=137"
+						class="card-img-top" alt="" height="250">
+				</div>
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
