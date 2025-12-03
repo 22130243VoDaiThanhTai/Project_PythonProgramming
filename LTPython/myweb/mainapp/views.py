@@ -1,18 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Product
+from django.shortcuts import render
 
 def home(request):
-    listProduct = Product.objects.all()
-
-    context = {
-        'listProduct': listProduct,
-    }
-    return render(request, 'mainapp/home.html', context)
-
-def detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    return render(request, 'mainapp/detail.html', {'product': product})
-
+    return render(request, 'mainapp/home.html')
 def cart(request):
     return render(request, 'mainapp/cart.html')
 def introduce(request):
