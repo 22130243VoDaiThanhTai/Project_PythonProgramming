@@ -16,3 +16,5 @@ def register(request):
     return render(request, 'mainapp/register.html')
 def policy(request):
     return render(request, 'mainapp/policy.html')
+def terms(request):
+    return render(request, 'mainapp/terms.html')
