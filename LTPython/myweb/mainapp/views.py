@@ -10,7 +10,9 @@ def contact(request):
     return render(request, 'mainapp/contact.html')
 def search(request):
     return render(request, 'mainapp/search.html')
-def login_view(request):
+def login(request):
     return render(request, 'mainapp/login.html')
-def register_view(request):
+def register(request):
     return render(request, 'mainapp/register.html')
+def policy(request):
+    return render(request, 'mainapp/policy.html')
