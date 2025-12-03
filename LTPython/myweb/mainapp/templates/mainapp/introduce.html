@@ -1,5 +1,84 @@
 {% extends "mainapp/base.html" %}
+{% load static %}
+
 {% block content %}
-<h2>Giới thiệu về website nè 😎</h2>
-<p>Đây là trang giới thiệu dummy để Django khỏi la nữa.</p>
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+
+                        <div class="row justify-content-center">
+
+                            <!-- Left: Image -->
+                            <div class="col-md-10 col-lg-5 col-xl-4 d-flex align-items-center order-2 order-lg-1">
+                                <img
+                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2if08lnubhwdc_tn.webp"
+                                        width="100%" style="border-radius: 15px;">
+                            </div>
+
+                            <!-- Right: Introduction text -->
+                            <div class="col-md-10 col-lg-7 col-xl-8 order-1 order-lg-2">
+
+                                <p class="text-center h2 fw-bold mb-4 mx-1 mx-md-4 mt-4">
+                                    Giới Thiệu MixiShop
+                                </p>
+
+                                <hr>
+
+                                <div class="mt-4">
+
+                                    <div class="fw-bold">
+                                        Website chính thức của MixiShop.
+                                        Hiện tại chúng mình chỉ nhận đơn hàng trên website,
+                                        không nhận bất kỳ nơi nào khác nhé!
+                                    </div>
+
+                                    <br>
+
+                                    <div class="fw-bold">
+                                        Nếu có ưu đãi, MixiShop sẽ thông báo công khai trên các kênh **CHÍNH THỨC & DUY NHẤT** sau đây:
+                                    </div>
+
+                                    <ul class="mt-3" style="font-size: 1.05rem;">
+                                        <li>
+                                            Website:
+                                            <a href="home">https://shop.mixigaming.com/</a>
+                                        </li>
+                                        <li>
+                                            Fanpage:
+                                            <a href="https://www.facebook.com/people/MixiShop/100076687362461/">
+                                                https://www.facebook.com/MixiShop-182674912385853/
+                                            </a>
+                                        </li>
+                                        <li>
+                                            Instagram:
+                                            <a href="https://www.instagram.com/mixi.shop/">
+                                                https://www.instagram.com/mixi.shop/
+                                            </a>
+                                        </li>
+                                        <li>Email: Mixiishop@gmail.com</li>
+                                        <li>Hotline: 0822221992 (7:30 - 22:00)</li>
+                                    </ul>
+
+                                    <br>
+
+                                    <div class="fw-bold">
+                                        MixiShop rất hân hạnh được phục vụ quý khách!
+                                    </div>
+                                </div>
+
+                                <br>
+                                <hr>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
