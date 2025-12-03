@@ -1,5 +1,76 @@
 {% extends "mainapp/base.html" %}
+{% load static %}
+
 {% block content %}
-<h2>Liên hệ</h2>
-<p>Đây là trang liên hệ demo cho vui 😎.</p>
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+
+                        <div class="row justify-content-center">
+
+                            <!-- Left side: Contact info -->
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                                    MixiShop Liên Hệ
+                                </p>
+
+                                <hr>
+
+                                <div class="mt-4">
+
+                                    <ul style="font-size: 1.1rem;">
+                                        <li>Địa chỉ: Yên Lãng, Hà Nội</li>
+                                        <li>Hotline: 0822221992</li>
+                                        <li>Email: Mixiishop@gmail.com</li>
+                                        <li>
+                                            Website:
+                                            <a href="home">https://shop.mixigaming.com/</a>
+                                        </li>
+                                        <li>
+                                            Fanpage:
+                                            <a href="https://www.facebook.com/people/MixiShop/100076687362461/">
+                                                https://www.facebook.com/MixiShop-182674912385853/
+                                            </a>
+                                        </li>
+                                        <li>
+                                            Instagram:
+                                            <a href="https://www.instagram.com/mixi.shop/">
+                                                https://www.instagram.com/mixi.shop/
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <br>
+                                    <div class="fw-bold">MixiShop xin vui lòng được phục vụ quý khách!</div>
+
+                                </div>
+
+                                <br>
+                                <hr>
+
+                            </div>
+
+                            <!-- Right side: Google maps -->
+                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.538561069379!2d105.8138255758721!3d21.01112628838281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab62a5618c2d%3A0xb861a5fd512bbdb!2zUC5Zw6puIEzDo25nLCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1716129319216!5m2!1svi!2s"
+                                        width="100%" height="470px" style="border:0;"
+                                        allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
