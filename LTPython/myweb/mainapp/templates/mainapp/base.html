@@ -88,14 +88,16 @@
                 </form>
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
+                    {% if request.session.account_id %}
+                    <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ user.username }}
+                                {{ request.session.username }}
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu">c
+                                {% comment %}
                                 <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-solid fa-user"></i> Trang cá nhân</a></li>
                                 <li><a class="dropdown-item" href="{% url 'orders' %}"><i class="fa-solid fa-truck-fast"></i> Đơn hàng</a></li>
+                                {% endcomment %}
                                 <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
                             </ul>
                         </li>
@@ -112,7 +114,7 @@
             </div>
 
             <div class="d-none d-md-block btn-radius" style="margin-right: 14px;">
-                {% if not user.is_authenticated %}
+                {% if not request.session.account_id %}
                     <a href="{% url 'login' %}" onclick="alert('Bạn chưa đăng nhập tài khoản! Vui lòng đăng nhập trước khi mua sắm!');">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>

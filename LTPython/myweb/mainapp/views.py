@@ -4,10 +4,13 @@ from .models import Product
 def home(request):
     listProduct = Product.objects.all()
 
-    context = {
+    # ✅ CHECK LOGIN
+    is_login = request.session.get('account_id') is not None
+
+    return render(request, 'mainapp/home.html', {
         'listProduct': listProduct,
-    }
-    return render(request, 'mainapp/home.html', context)
+        'is_login': is_login
+    })
 
 def detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -20,7 +23,7 @@ def contact(request):
     return render(request, 'mainapp/contact.html')
 def search(request):
     return render(request, 'mainapp/search.html')
-def login(request):
+def login_view(request):
     return render(request, 'mainapp/login.html')
 def register(request):
     return render(request, 'mainapp/register.html')
