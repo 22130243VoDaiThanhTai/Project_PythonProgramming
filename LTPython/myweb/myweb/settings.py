@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mainapp', 
+    'mainapp',
+    'account',
     'django.contrib.humanize',  
 ]
 
@@ -80,13 +81,11 @@ DATABASES = {
         'NAME': 'mixishop',
         'USER': 'root',
         'PASSWORD': 'a01663498879',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        }
     }
 }
+
 
 
 # Password validation

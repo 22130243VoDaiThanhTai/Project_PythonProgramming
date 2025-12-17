@@ -93,8 +93,8 @@
 						<input type="hidden" name="action" value="add" />
 						<input type="hidden" name="productCode" value="{{ product.id }}" />
 
-						{% if not user.is_authenticated %}
-						<a href="{% url 'login' %}"
+						{% if not request.session.account_id %}
+						<a style="text-decoration: none" href="{% url 'login' %}"
 							onclick="alert('Bạn chưa đăng nhập tài khoản! \\nVui lòng đăng nhập trước khi mua sắm!');">
 							<button type="button" class="btn btn-outline-success btn-radius btn-scale">
 								Thêm vào giỏ hàng
