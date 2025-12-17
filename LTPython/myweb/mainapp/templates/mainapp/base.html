@@ -89,13 +89,15 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ user.username }}
                             </a>
                             <ul class="dropdown-menu">
+                                {% comment %}
                                 <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-solid fa-user"></i> Trang cá nhân</a></li>
                                 <li><a class="dropdown-item" href="{% url 'orders' %}"><i class="fa-solid fa-truck-fast"></i> Đơn hàng</a></li>
+                                {% endcomment %}
                                 <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
                             </ul>
                         </li>
@@ -183,8 +185,7 @@
 							</h3>
 							<ul class="list-menu toggle-mn"
 								style="list-style-type: none; padding-left: 0;">
-								<li class="li_menu" style="margin: 0;"><a class="link"
-									href="home" title="Trang chủ" style="text-decoration: none;">Trang
+								<li class="li_menu" style="margin: 0;"><a class="link" href="{% url 'policy' %}" title="Trang chủ" style="text-decoration: none;">Trang
 										chủ</a></li>
 								<li class="li_menu" style="margin: 0;"><a class="link"
 									href="introduce" title="Giới thiệu"
@@ -208,8 +209,7 @@
 								<li class="li_menu" style="margin: 0;"><a class="link"
 									href="policy" title="Chính sách bảo mật"
 									style="text-decoration: none;">Chính sách bảo mật</a></li>
-								<li class="li_menu" style="margin: 0;"><a class="link"
-									href="terms" title="Điều khoản dịch vụ"
+								<li class="li_menu" style="margin: 0;"><a class="link" href="{% url 'terms' %}" title="Điều khoản dịch vụ"
 									style="text-decoration: none;">Điều khoản dịch vụ</a></li>
 							</ul>
 						</div>
