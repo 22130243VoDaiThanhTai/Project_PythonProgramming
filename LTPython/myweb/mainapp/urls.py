@@ -11,4 +11,5 @@ urlpatterns = [
     path('product/<int:product_id>/', views.detail, name='detail'),
     path('account/', include('account.urls')),
     path('cart/', include('cart.urls')),
+    path('chat-support/', views.chatSupport, name="chat_support"),
 ]

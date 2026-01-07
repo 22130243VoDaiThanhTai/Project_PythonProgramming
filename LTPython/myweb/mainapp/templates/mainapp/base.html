@@ -57,7 +57,6 @@
                 <a href="{% url 'cart' %}">
                     <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                 </a>
-                <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>
             </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -80,6 +79,9 @@
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Liên hệ</a></li>
+                    <a class="nav-link" href="{% url 'chat_support' %}">
+                        <img style="width: 30px; height: 30px" src="{% static 'images/chatSupport.png' %}">
+                    </a>
                 </ul>
 
                 <form class="d-flex" role="search" method="GET" action="{% url 'search' %}">
@@ -118,17 +120,16 @@
                     <a href="{% url 'login' %}" onclick="alert('Bạn chưa đăng nhập tài khoản! Vui lòng đăng nhập trước khi mua sắm!');">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>
-                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>
                 {% elif not cart %}
                     <a href="{% url 'cart' %}">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>
-                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>
+<!--                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>-->
                 {% else %}
                     <a href="{% url 'cart' %}">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>
-                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">{{ cart.number_of_items }}</p>
+<!--                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">{{ cart.number_of_items }}</p>-->
                 {% endif %}
             </div>
         </div>
