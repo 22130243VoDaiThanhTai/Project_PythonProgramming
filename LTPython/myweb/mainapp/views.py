@@ -50,7 +50,22 @@ def search(request):
     }
 
     return render(request, 'mainapp/search.html', context)
-
+def admin_login(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None and user.is_staff:
+            print(f"DEBUG: User {username} is_staff: {user.is_staff}")
+            login(request, user)
+            return redirect('admin_dashboard')
+        else:
+            error = "Bạn không có quyền truy cập Admin"
+            
+    return render(request, 'mainapp/admin_login.html', {'error': error})
 def login_view(request):
     return render(request, 'mainapp/login.html')
 def register(request):
