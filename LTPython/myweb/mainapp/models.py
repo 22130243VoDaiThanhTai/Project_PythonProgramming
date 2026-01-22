@@ -26,8 +26,6 @@ class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name="Tên sản phẩm")
     price = models.PositiveIntegerField(verbose_name="Giá bán")
     stock = models.PositiveIntegerField(default=0, verbose_name="Tồn kho")
-
-    # 👉 chỉ lưu tên file, ví dụ: iphone15.webp
     image = models.CharField(
         max_length=255,
         blank=True,
