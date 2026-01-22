@@ -1,22 +1,22 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.core.files.storage import default_storage
-from .models import Product, Category
+from .models import Product, Category, Profile
 from AI_model.ai_model import predict_image
 from django.conf import settings
 import os
 from django.http import JsonResponse
 from urllib.parse import urlencode
+from django.contrib.auth import login
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+import json
 
 def home(request):
     listProduct = Product.objects.all()
 
-    # ✅ CHECK LOGIN
-    is_login = request.session.get('account_id') is not None
-
     return render(request, 'mainapp/home.html', {
         'listProduct': listProduct,
-        'is_login': is_login
     })
 
 def detail(request, product_id):
@@ -59,7 +59,8 @@ def policy(request):
     return render(request, 'mainapp/policy.html')
 def terms(request):
     return render(request, 'mainapp/terms.html')
-
+def gooogleRedirect(request):
+    return render(request, 'mainapp/googleRedirect.html')
 def chatSupport(request):
     SEARCH_BASE = "/search/?"
 
@@ -110,3 +111,41 @@ def chatSupport(request):
         {"error": "Method not allowed"},
         status=405
     )
+
+@csrf_exempt
+def google_login(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+
+    data = json.loads(request.body)
+
+    email = data.get("email")
+    full_name = data.get("fullName", "")
+
+    if not email:
+        return JsonResponse({"error": "Missing email"}, status=400)
+
+    user, created = User.objects.get_or_create(
+        email=email,
+        defaults={
+            "username": email,
+            "first_name": full_name,
+        }
+    )
+
+    if created:
+        user.set_unusable_password()
+        user.save()
+
+        Profile.objects.create(user=user)
+
+    login(request, user)
+
+    return JsonResponse({
+        "message": "Login Google thành công",
+        "user": {
+            "id": user.id,
+            "email": user.email,
+            "name": user.first_name,
+        }
+    })
