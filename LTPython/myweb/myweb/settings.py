@@ -3,8 +3,8 @@ import os # Thêm thư viện này để xử lý đường dẫn ảnh
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG') == 'True'
+SECRET_KEY = 'django-insecure-u_@ipn1=2t@-b=rd-q8b&+i@gih&_40c30z%s-azk-s59(g%e+'
+DEBUG = 'True'
 ALLOWED_HOSTS = []
 
 
@@ -60,11 +60,11 @@ WSGI_APPLICATION = 'myweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'), 
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'NAME': 'mixishop',
+        'USER': 'root',
+        'PASSWORD': 'a01663498879',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
