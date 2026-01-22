@@ -84,3 +84,43 @@
 .goodnesssec a{
     text-decoration: none;
 }
+
+/* GOOGLE LOGIN BUTTON - TEXT ONLY */
+.google-login-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-google {
+    background-color: #ffffff;
+    color: #444;
+    border: 1px solid #ddd;
+
+    width: 320px;          /* ⬅ gọn, không quá to */
+    padding: 10px 0;       /* ⬅ chiều cao vừa */
+
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+
+    transition:
+            background-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.15s ease;
+}
+
+/* HOVER – NHẸ, ĐẸP */
+.btn-google:hover {
+    background-color: #f7f7f7;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+
+/* CLICK */
+.btn-google:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+

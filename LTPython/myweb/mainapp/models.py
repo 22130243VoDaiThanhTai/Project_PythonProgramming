@@ -57,6 +57,12 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
+
+    full_name = models.CharField(max_length=255, blank=True, verbose_name="Tên người nhận")
+    phone = models.CharField(max_length=20, blank=True, verbose_name="Số điện thoại")
+    address = models.CharField(max_length=255, blank=True, verbose_name="Địa chỉ giao hàng")
+    note = models.TextField(blank=True, verbose_name="Ghi chú")
+
     @property
     def total_bill(self):
         return self.items.aggregate(

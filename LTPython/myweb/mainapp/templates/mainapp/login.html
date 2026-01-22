@@ -41,8 +41,15 @@
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button style="border-radius: 12PX;" type="submit" class="btn btn-success btn-lg">Đăng nhập</button>
                                     </div>
+                                    <div style="display: flex; align-items: center; justify-content: center" class="google-login-wrapper mt-3">
+                                        <button style=" border: 0.5px solid black; border-radius: 10px; background-color: #198754"
+                                                type="button"
+                                                onclick="loginWithGoogle()"
+                                                class="btn btn-google">
+                                            <span style="color: #fff">Đăng nhập bằng Google</span>
+                                        </button>
+                                    </div>
                                 </form>
-
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                                 <img src="{% static 'images/mixicity.png' %}" class="img-fluid" alt="">
@@ -54,4 +61,20 @@
         </div>
     </div>
 </section>
+<script>
+    const CLIENT_ID = "990837395420-q9d7b9ots3c5edvesabe1dmi5teq5vh1.apps.googleusercontent.com";
+
+    const REDIRECT_URI = "http://127.0.0.1:8000/googleRedirect/";
+
+    const LINK_GET_TOKEN =
+        "https://accounts.google.com/o/oauth2/v2/auth?" +
+        "scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&" +
+        "response_type=token&" +
+        `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+        `client_id=${CLIENT_ID}`;
+
+    function loginWithGoogle() {
+        window.location.href = LINK_GET_TOKEN;
+    }
+</script>
 {% endblock %}

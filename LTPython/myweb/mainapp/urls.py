@@ -11,4 +11,7 @@ urlpatterns = [
     path('product/<int:product_id>/', views.detail, name='detail'),
     path('account/', include('account.urls')),
     path('cart/', include('cart.urls')),
+    path('chat-support/', views.chatSupport, name="chat_support"),
+    path('googleRedirect/', views.gooogleRedirect, name="redirect"),
+    path("auth/google-login/", views.google_login, name="google_login"),
 ]

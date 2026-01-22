@@ -23,9 +23,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/myscript.js' %}"></script>
     <script src="{% static 'js/notification.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/all.min.js' %}"></script>
 
     <title>MixiShop</title>
@@ -38,6 +38,9 @@
 </head>
 
 <body>
+    <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+    {% include "mainapp/chatbot.html" %}
+    <script src="{% static 'js/chatbot.js' %}"></script>
 
     <!-- HEADER MENU -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
@@ -57,7 +60,6 @@
                 <a href="{% url 'cart' %}">
                     <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                 </a>
-                <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>
             </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -118,17 +120,14 @@
                     <a href="{% url 'login' %}" onclick="alert('Bạn chưa đăng nhập tài khoản! Vui lòng đăng nhập trước khi mua sắm!');">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>
-                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>
                 {% elif not cart %}
                     <a href="{% url 'cart' %}">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>
-                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">0</p>
                 {% else %}
                     <a href="{% url 'cart' %}">
                         <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Giỏ hàng">
                     </a>
-                    <p id="cart-total" style="margin-right: 18px; margin-top: 20px;">{{ cart.number_of_items }}</p>
                 {% endif %}
             </div>
         </div>
@@ -237,6 +236,7 @@
 
     {% if user.is_authenticated %}
     <script>
+        const csrftoken = '{{ csrf_token }}';
         var minute = 10;
         var second = 60;
         var timerOut = minute * second * 1000;
