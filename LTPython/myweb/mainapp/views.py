@@ -63,16 +63,14 @@ def terms(request):
 def chatSupport(request):
     SEARCH_BASE = "/search/?"
 
-    # Mapping AI label -> category_id
     PRODUCT_CATEGORY = {
-        "aothun": 2,   # Áo Mixi
+        "aothun": 2,
         "hoodie": 2,
-        "bottle": 1,   # Cốc/bình
-        "lego": 3,     # Lego
+        "bottle": 1,
+        "lego": 3,
         "other": None
     }
 
-    # Mapping AI label -> mô tả
     PRODUCT_DESC = {
         "aothun": "áo thun",
         "hoodie": "hoodie",
@@ -84,18 +82,14 @@ def chatSupport(request):
     if request.method == "POST" and request.FILES.get("image"):
         img_file = request.FILES["image"]
 
-        # Lưu file tạm
         save_path = default_storage.save(f"uploads/{img_file.name}", img_file)
         full_path = os.path.join(settings.MEDIA_ROOT, save_path)
 
-        # Dự đoán
         label, confidence = predict_image(full_path)
 
-        # Lấy category_id
         category_id = PRODUCT_CATEGORY.get(label)
         desc = PRODUCT_DESC.get(label, "sản phẩm")
 
-        # Tạo URL search dựa trên category (tìm theo tên category)
         if category_id:
             query_params = urlencode({"category": category_id})
             search_url = f"{SEARCH_BASE}{query_params}"
@@ -104,7 +98,7 @@ def chatSupport(request):
                 f"Shop có bán sản phẩm này, bạn có thể xem tại <a href='{search_url}'>đây</a>."
             )
         else:
-            reply_text = f"Shop mình hiện chưa bán sản phẩm này."
+            reply_text = "Shop mình hiện chưa bán sản phẩm này."
 
         return JsonResponse({
             "reply": reply_text,
@@ -112,4 +106,7 @@ def chatSupport(request):
             "confidence": confidence
         })
 
-    return render(request, "mainapp/chat_support.html")
+    return JsonResponse(
+        {"error": "Method not allowed"},
+        status=405
+    )
