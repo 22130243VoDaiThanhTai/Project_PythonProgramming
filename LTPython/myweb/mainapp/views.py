@@ -11,6 +11,14 @@ from django.contrib.auth import login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 import json
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required(login_url='custom_admin_login')
+def admin_dashboard(request):
+    return render(request, 'mainapp/admin_dashboard.html')
 
 def home(request):
     listProduct = Product.objects.all()
@@ -18,27 +26,33 @@ def home(request):
     return render(request, 'mainapp/home.html', {
         'listProduct': listProduct,
     })
-def admin_login(request):
-    error = None
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None and user.is_staff:
-            print(f"DEBUG: User {username} is_staff: {user.is_staff}")
-            login(request, user)
-            return redirect('admin_dashboard')
-        else:
-            error = "Bạn không có quyền truy cập Admin"
-            
-    return render(request, 'mainapp/admin_login.html', {'error': error})
+
 def admin_logout(request):
     logout(request)
     return redirect('home')
-def admin_dashboard(request):
-    return render(request, 'mainapp/admin_dashboard.html')
+
+def admin_login(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is None:
+            messages.error(request, "Sai tên đăng nhập hoặc mật khẩu")
+            return render(request, 'mainapp/admin_login.html')
+
+
+        if user.is_staff or user.is_superuser:
+            login(request, user)
+            return redirect('admin_dashboard')
+        else:
+            messages.error(request, "Bạn không có quyền truy cập Admin")
+            return render(request, 'mainapp/admin_login.html')
+
+    return render(request, 'mainapp/admin_login.html')
+
 def detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'mainapp/detail.html', {'product': product})
