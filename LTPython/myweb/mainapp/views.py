@@ -1,7 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
+from django.db.models import Q, Sum
+from .models import Product, Category, Profile, Order
 from django.core.files.storage import default_storage
-from .models import Product, Category, Profile
+from django.db.models import Sum, F
+from .models import Order, OrderItem
+
 from AI_model.ai_model import predict_image
 from django.conf import settings
 import os
@@ -18,7 +22,32 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 @staff_member_required(login_url='custom_admin_login')
 def admin_dashboard(request):
-    return render(request, 'mainapp/admin_dashboard.html')
+    users = User.objects.all()
+    products = Product.objects.all()
+    orders = Order.objects.all().order_by('-date_ordered')
+
+   
+    total_revenue = OrderItem.objects.aggregate(
+        total=Sum(F('price') * F('quantity'))
+    )['total'] or 0
+
+    context = {
+        'users': users,
+        'products': products,
+        'orders': orders,
+
+        'total_users': users.count(),
+        'total_products': products.count(),
+        'total_orders': orders.count(),
+        'total_revenue': total_revenue,
+
+        'chart_labels': ['T1', 'T2', 'T3', 'T4'],
+        'chart_data': [0, 0, 0, 0],
+    }
+
+    return render(request, 'mainapp/admin_dashboard.html', context)
+
+
 
 def home(request):
     listProduct = Product.objects.all()
