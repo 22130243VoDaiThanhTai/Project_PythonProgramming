@@ -14,8 +14,4 @@ urlpatterns = [
     path('chat-support/', views.chatSupport, name="chat_support"),
     path('googleRedirect/', views.gooogleRedirect, name="redirect"),
     path("auth/google-login/", views.google_login, name="google_login"),
-    path('custom-admin/login/', views.admin_login, name='custom_admin_login'),
-    path('custom-admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
-    path('custom-admin/logout/', views.admin_logout, name='admin_logout'),
-
 ]

@@ -62,7 +62,7 @@ def add_to_cart(request, product_id):
             item.quantity += 1
 
     item.save()
-    return redirect(request.META.get('HTTP_REFERER', 'home'))
+    return redirect('cart')
 
 
 @login_required
