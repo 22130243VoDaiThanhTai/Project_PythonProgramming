@@ -1,11 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from django.db.models import Q, Sum
-from .models import Product, Category, Profile, Order
 from django.core.files.storage import default_storage
-from django.db.models import Sum, F
-from .models import Order, OrderItem
-
+from .models import Product, Category, Profile
 from AI_model.ai_model import predict_image
 from django.conf import settings
 import os
@@ -15,39 +11,6 @@ from django.contrib.auth import login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 import json
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
-
-@staff_member_required(login_url='custom_admin_login')
-def admin_dashboard(request):
-    users = User.objects.all()
-    products = Product.objects.all()
-    orders = Order.objects.all().order_by('-date_ordered')
-
-   
-    total_revenue = OrderItem.objects.aggregate(
-        total=Sum(F('price') * F('quantity'))
-    )['total'] or 0
-
-    context = {
-        'users': users,
-        'products': products,
-        'orders': orders,
-
-        'total_users': users.count(),
-        'total_products': products.count(),
-        'total_orders': orders.count(),
-        'total_revenue': total_revenue,
-
-        'chart_labels': ['T1', 'T2', 'T3', 'T4'],
-        'chart_data': [0, 0, 0, 0],
-    }
-
-    return render(request, 'mainapp/admin_dashboard.html', context)
-
-
 
 def home(request):
     listProduct = Product.objects.all()
@@ -55,32 +18,6 @@ def home(request):
     return render(request, 'mainapp/home.html', {
         'listProduct': listProduct,
     })
-
-def admin_logout(request):
-    logout(request)
-    return redirect('home')
-
-def admin_login(request):
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is None:
-            messages.error(request, "Sai tên đăng nhập hoặc mật khẩu")
-            return render(request, 'mainapp/admin_login.html')
-
-
-        if user.is_staff or user.is_superuser:
-            login(request, user)
-            return redirect('admin_dashboard')
-        else:
-            messages.error(request, "Bạn không có quyền truy cập Admin")
-            return render(request, 'mainapp/admin_login.html')
-
-    return render(request, 'mainapp/admin_login.html')
 
 def detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)

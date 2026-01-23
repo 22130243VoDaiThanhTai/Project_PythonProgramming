@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'account',
     'cart',
     'django.contrib.humanize',
-    'myweb.mainapp.context_processors.categories_processor',
 ]
 
 MIDDLEWARE = [
@@ -47,8 +46,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'myweb.mainapp.context_processors.categories_processor',
-
             ],
         },
     },
