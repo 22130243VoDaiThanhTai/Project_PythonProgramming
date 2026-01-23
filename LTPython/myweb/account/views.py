@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from mainapp.models import Profile
+import os
+from django.conf import settings
+import shutil
 
 def login_view(request):
     if request.method == "POST":
@@ -63,5 +66,14 @@ def register_view(request):
     return render(request, "mainapp/register.html")
 
 def logout_view(request):
+    # Xóa tất cả file tạm uploads
+    uploads_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
+    if os.path.exists(uploads_dir):
+        shutil.rmtree(uploads_dir)  # xóa toàn bộ folder và file bên trong
+
+    # Tạo lại folder trống để lần sau upload không lỗi
+    os.makedirs(uploads_dir, exist_ok=True)
+
+    # Logout user
     logout(request)
-    return redirect("login")
+    return redirect('home')  # chuyển về trang chủ

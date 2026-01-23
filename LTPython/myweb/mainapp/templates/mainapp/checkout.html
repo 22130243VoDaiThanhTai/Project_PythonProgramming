@@ -1,0 +1,99 @@
+{% extends "mainapp/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="mb-4">Xác nhận đơn hàng</h2>
+
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <table class="table table-bordered align-middle">
+        <thead class="table-light text-center">
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tạm tính</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td class="text-center">{{ item.price|intcomma }} VNĐ</td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-end">{{ item.subtotal|intcomma }} VNĐ</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="text-end mt-3">
+        Tổng thanh toán:
+        <span class="text-danger">{{ total|intcomma }} VNĐ</span>
+    </h4>
+
+    <hr>
+
+    <!-- FORM ĐẶT HÀNG -->
+    <form method="POST" action="{% url 'place_order' %}" class="mt-4">
+        {% csrf_token %}
+
+        <!-- TÊN NGƯỜI NHẬN -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Tên người nhận</label>
+            <input
+                    type="text"
+                    name="full_name"
+                    class="form-control"
+                    placeholder="Nguyễn Văn A"
+                    required
+            >
+        </div>
+
+        <!-- SỐ ĐIỆN THOẠI -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Số điện thoại</label>
+            <input
+                    type="text"
+                    name="phone"
+                    class="form-control"
+                    placeholder="0xxx xxx xxx"
+                    required
+            >
+        </div>
+
+        <!-- ĐỊA CHỈ -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Địa chỉ nhận hàng</label>
+            <input
+                    type="text"
+                    name="address"
+                    class="form-control"
+                    placeholder="Số nhà, đường, quận, thành phố"
+                    required
+            >
+        </div>
+
+        <!-- GHI CHÚ -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">
+                Ghi chú (không bắt buộc)
+            </label>
+            <textarea
+                    name="note"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."
+            ></textarea>
+        </div>
+
+        <div class="text-end">
+            <button style="border-radius: 15px" type="submit" class="btn btn-danger btn-lg">
+                Xác nhận đặt hàng
+            </button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

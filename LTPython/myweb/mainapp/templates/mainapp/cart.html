@@ -46,6 +46,12 @@
         Tổng tiền: <span class="text-danger">{{ total|intcomma }} VNĐ</span>
     </h4>
 
+    <div  class="text-end mt-3">
+        <a style="border-radius: 15px" href="{% url 'checkout' %}" class="btn btn-success btn-lg">
+            Tiến hành thanh toán
+        </a>
+    </div>
+
     {% else %}
     <p class="text-center fs-5">Giỏ hàng trống</p>
     {% endif %}

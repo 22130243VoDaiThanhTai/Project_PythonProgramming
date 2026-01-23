@@ -93,3 +93,55 @@ def update_cart(request, item_id):
             item.delete()
 
     return redirect('cart')
+
+@login_required
+def checkout(request):
+    cart = get_cart(request.user)
+    items = cart.items.select_related('product')
+
+    item_list = []
+    total = 0
+    for item in items:
+        subtotal = item.price * item.quantity
+        total += subtotal
+        item_list.append({
+            'product': item.product,
+            'price': item.price,
+            'quantity': item.quantity,
+            'subtotal': subtotal
+        })
+
+    return render(request, 'mainapp/checkout.html', {
+        'cart': cart,
+        'items': item_list,
+        'total': total
+    })
+
+
+@login_required
+def place_order(request):
+    if request.method != "POST":
+        return redirect('checkout')
+
+    cart = get_cart(request.user)
+
+    if cart.items.count() == 0:
+        return redirect('cart')
+
+    cart.full_name = request.POST['full_name']
+    cart.phone = request.POST['phone']
+    cart.address = request.POST['address']
+    cart.note = request.POST.get('note', '')
+
+    # Trừ kho
+    for item in cart.items.select_related('product'):
+        if item.quantity > item.product.stock:
+            return redirect('cart')
+
+        item.product.stock -= item.quantity
+        item.product.save()
+
+    cart.status = 'completed'
+    cart.save()
+
+    return redirect('home')

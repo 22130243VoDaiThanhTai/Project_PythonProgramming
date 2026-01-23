@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Google Login</title>
+</head>
+<body>
+<p>Đang xử lý đăng nhập Google...</p>
+
+<script>
+    function getGoogleAccessToken() {
+        const hash = window.location.hash;
+        if (!hash) return null;
+        const params = new URLSearchParams(hash.substring(1));
+        return params.get("access_token");
+    }
+
+    async function getGoogleUserInfo(token) {
+        const res = await fetch(
+            "https://www.googleapis.com/oauth2/v2/userinfo",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return res.json();
+    }
+
+    async function loginToBackend(googleUser) {
+        const res = await fetch("/auth/google-login/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                email: googleUser.email,
+                fullName: googleUser.name
+            })
+        });
+        return res.json();
+    }
+
+    (async function () {
+        try {
+            const token = getGoogleAccessToken();
+            if (!token) throw "Missing token";
+
+            const googleUser = await getGoogleUserInfo(token);
+            await loginToBackend(googleUser);
+
+            // clear hash
+            window.location.hash = "";
+
+            // redirect về trang chủ
+            window.location.href = "/";
+        } catch (err) {
+            console.error(err);
+            window.location.href = "/account/login/";
+        }
+    })();
+</script>
+</body>
+</html>
