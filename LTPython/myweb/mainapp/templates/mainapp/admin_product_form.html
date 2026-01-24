@@ -1,0 +1,29 @@
+<h3>
+    {% if mode == 'add' %}
+    ➕ Thêm sản phẩm
+
+    {% endif %}
+</h3>
+
+<form method="post">
+    {% csrf_token %}
+
+    <input name="name" class="form-control mb-2" placeholder="Tên sản phẩm" value="{{ product.name|default:'' }}">
+
+    <input name="price" class="form-control mb-2" placeholder="Giá" value="{{ product.price|default:'' }}">
+
+    <input name="stock" class="form-control mb-2" placeholder="Tồn kho" value="{{ product.stock|default:'' }}">
+
+    <input name="image" class="form-control mb-2" placeholder="Tên file ảnh" value="{{ product.image|default:'' }}">
+
+    <select name="category" class="form-control mb-3">
+        {% for c in categories %}
+        <option value="{{ c.id }}" {% if mode == 'edit' and product.category.id == c.id %} selected {% endif %}>
+            {{ c.name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Hủy</a>
+</form>
