@@ -27,20 +27,20 @@ MixiShop là website bán hàng mô phỏng (đồ án), gồm:
 git clone <repo-url>
 cd LTPython/myweb
 
-III. TẠO & KÍCH HOẠT VIRTUAL ENVIRONMENT (BẮT BUỘC)
+A. TẠO & KÍCH HOẠT VIRTUAL ENVIRONMENT (BẮT BUỘC)
 1. Tạo virtual environment
 py -3.9 -m venv venv39
 
 2. Kích hoạt venv (PowerShell)
 .\venv39\Scripts\activate
-IV. CÀI ĐẶT THƯ VIỆN
+B. CÀI ĐẶT THƯ VIỆN
 pip install django django-jazzmin pillow pymysql tensorflow
-V. MIGRATE DATABASE
+C. MIGRATE DATABASE
 python manage.py makemigrations
 python manage.py migrate
-VI. TẠO TÀI KHOẢN ADMIN
+D. TẠO TÀI KHOẢN ADMIN
 python manage.py createsuperuser
-VII. SEED DỮ LIỆU MẪU
+E. SEED DỮ LIỆU MẪU
 python manage.py seed
-VIII. CHẠY SERVER
+F. CHẠY SERVER
 python manage.py runserver
